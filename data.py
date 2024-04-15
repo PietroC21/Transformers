@@ -7,8 +7,7 @@ def find_string_with_character(strings, index):
             continue
         elif string.find(':')!=-1:  
             return i
-
-def creat_dataset(url):
+def create_dataset(url):
     #Get reponse from request
     response = requests.get(url)
 
@@ -17,16 +16,16 @@ def creat_dataset(url):
     line = response.text.split('\n')[1:]
     index = 0
     indexNxt = 0
-    print(line[0])
-    for i in range(13):
+    for _ in range(13):
         index = indexNxt+1
         indexNxt = find_string_with_character(line, index)
-        dataset.update({line[index-1]:line[index:indexNxt]})
+        dataset.update({line[index-1][2:]:line[index:indexNxt]})
 
     dataset.update({line[indexNxt]:line[index:len(line)]})
     return dataset
 
 
+
 if __name__ == '__main__':
-    url = 'https://www.cs.fsu.edu/~liux/courses/deepRL/assignments/word-test.v1.txt'
-    dataset = creat_dataset(url)
+    url_vocab = 'https://www.cs.fsu.edu/~liux/courses/deepRL/assignments/bert_vocab.txt'
+    dataset = create_dataset(url_vocab)
